@@ -1,0 +1,25 @@
+<link rel="import"
+	href="https://cdn.rawgit.com/download/polymer-cdn/1.5.0/lib/iron-ajax/iron-ajax.html">
+
+<dom-module id="show-list"> <template> <span>{{list.id}}</span>
+<span>{{list.content}}</span> <!-- <template is="dom-repeat" items="[[list]]">
+            <span>{{list.content}}</span>
+            <br />
+        </template> --> <iron-ajax id="requestList"
+	url="http://localhost:8080/list" method=GET handle-as="json"
+	on-response="handleResponse"></iron-ajax> </template> <script>
+		Polymer({
+			is : 'show-list',
+			properties : {
+				list : {
+					type : Object
+				}
+			},
+			ready : function() {
+				this.$.requestList.generateRequest();
+			},
+			handleResponse : function(data) {
+				this.list = data.detail.response;
+			}
+		});
+	</script> </dom-module>
